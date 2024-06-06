@@ -12,6 +12,7 @@ namespace LibraryManagementSystem
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new login());
+            Application.Run(new register());
         }
     }
 }

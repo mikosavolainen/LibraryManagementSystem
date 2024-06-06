@@ -21,5 +21,12 @@ namespace LibraryManagementSystem
         {
 
         }
+
+        
+
+        private void maskedTextBox3_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
+        {
+
+        }
     }
 }
