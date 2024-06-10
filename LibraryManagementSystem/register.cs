@@ -22,11 +22,23 @@ namespace LibraryManagementSystem
 
         }
 
-        
+
 
         private void maskedTextBox3_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
         {
 
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var log = new login();
+            log.Show();
+            this.Hide();
         }
     }
 }
