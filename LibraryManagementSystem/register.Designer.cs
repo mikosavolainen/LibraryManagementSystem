@@ -42,7 +42,9 @@
             label1 = new Label();
             button2 = new Button();
             label5 = new Label();
+            groupBox2 = new GroupBox();
             groupBox1.SuspendLayout();
+            groupBox2.SuspendLayout();
             SuspendLayout();
             // 
             // textBox1
@@ -160,37 +162,50 @@
             // 
             // button2
             // 
-            button2.Location = new Point(546, 215);
+            button2.Location = new Point(57, 52);
             button2.Name = "button2";
             button2.Size = new Size(75, 23);
             button2.TabIndex = 5;
             button2.Text = "Login";
             button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(534, 188);
+            label5.Location = new Point(45, 25);
             label5.Name = "label5";
             label5.Size = new Size(98, 15);
             label5.TabIndex = 6;
             label5.Text = "Already account?";
+            label5.Click += label5_Click;
+            // 
+            // groupBox2
+            // 
+            groupBox2.Controls.Add(label5);
+            groupBox2.Controls.Add(button2);
+            groupBox2.Location = new Point(535, 101);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new Size(200, 100);
+            groupBox2.TabIndex = 7;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "Already account?";
             // 
             // register
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(label5);
-            Controls.Add(button2);
+            Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Name = "register";
             Text = "register";
             Load += register_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
+            groupBox2.ResumeLayout(false);
+            groupBox2.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -209,5 +224,6 @@
         private MaskedTextBox maskedTextBox1;
         private MaskedTextBox maskedTextBox3;
         private Label label6;
+        private GroupBox groupBox2;
     }
 }
