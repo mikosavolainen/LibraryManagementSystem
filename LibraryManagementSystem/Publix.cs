@@ -16,9 +16,9 @@ namespace Login
 
 
 
-            public static string Connect { get; set; } = "Server=176.93.48.21;Port=3308;Database=library;Uid=root;Pwd=1234592;";
+            //public static string Connect { get; set; } = "Server=176.93.48.21;Port=3308;Database=library;Uid=root;Pwd=1234592;";
 
-            //public static string Connect { get; set; } = "server=192.168.1.129;port=3308;database=library;uid=root;password=1234592";
+            public static string Connect { get; set; } = "server=192.168.1.129;port=3308;database=library;uid=root;password=1234592";
         }
     }
 }

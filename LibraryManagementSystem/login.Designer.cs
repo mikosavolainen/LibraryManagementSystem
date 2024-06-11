@@ -62,7 +62,7 @@ namespace LibraryManagementSystem
             groupBox1.Controls.Add(label1);
             groupBox1.Controls.Add(textBox1);
             groupBox1.Controls.Add(textBox2);
-            groupBox1.Location = new Point(249, 77);
+            groupBox1.Location = new Point(22, 12);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(200, 236);
             groupBox1.TabIndex = 2;
@@ -72,7 +72,7 @@ namespace LibraryManagementSystem
             // button1
             // 
             button1.BackColor = Color.LightGreen;
-            button1.Location = new Point(63, 178);
+            button1.Location = new Point(47, 175);
             button1.Name = "button1";
             button1.Size = new Size(75, 23);
             button1.TabIndex = 4;
@@ -103,7 +103,7 @@ namespace LibraryManagementSystem
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Lavender;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(241, 271);
             Controls.Add(groupBox1);
             Name = "login";
             Text = "Form2";

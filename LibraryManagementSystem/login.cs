@@ -19,7 +19,7 @@ namespace LibraryManagementSystem
 
                 using (MySqlConnection connection = new MySqlConnection(publix.Connect))
                 {
-                    string query = "SELECT * FROM members WHERE username = @Username AND password = @Password";
+                    string query = "SELECT * FROM members WHERE username = @UserName AND password = @Password";
                     var command = new MySqlCommand(query, connection);
                     command.Parameters.AddWithValue("@Username", User);
                     command.Parameters.AddWithValue("@Password", Pass);
@@ -30,14 +30,23 @@ namespace LibraryManagementSystem
                     if (reader.Read())
                     {
 
-                        string username = reader["username"].ToString();
-                        string email = reader["email"].ToString();
-                        string phoneNumber = reader["number"].ToString();
-                        string dateOfBirth = reader["date"].ToString();
-                        string password = reader["password"].ToString();
+                        string username = reader["UserName"].ToString();
+                        string email = "reader";
+                        string firstname = reader["FirstName"].ToString();
+                        string lastname = reader["LastName"].ToString();
+                        string phoneNumber = reader["PhoneNumber"].ToString();
+                        string password = reader["Password"].ToString();
 
                         publix.Name = username;
                         publix.Password = password;
+                        publix.Email = email;
+                        publix.PhoneNumber = phoneNumber;
+                        publix.Firstname = firstname;
+                        publix.Lastname = lastname;
+
+                        var log = new Profile();
+                        log.Show();
+                        this.Hide();
 
                     }
                     else
