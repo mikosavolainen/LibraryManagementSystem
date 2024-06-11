@@ -43,18 +43,16 @@ namespace LibraryManagementSystem
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(51, 68);
-            textBox1.Margin = new Padding(3, 4, 3, 4);
+            textBox1.Location = new Point(45, 51);
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(114, 27);
+            textBox1.Size = new Size(100, 23);
             textBox1.TabIndex = 0;
             // 
             // textBox2
             // 
-            textBox2.Location = new Point(51, 167);
-            textBox2.Margin = new Padding(3, 4, 3, 4);
+            textBox2.Location = new Point(45, 125);
             textBox2.Name = "textBox2";
-            textBox2.Size = new Size(114, 27);
+            textBox2.Size = new Size(100, 23);
             textBox2.TabIndex = 1;
             // 
             // groupBox1
@@ -64,11 +62,9 @@ namespace LibraryManagementSystem
             groupBox1.Controls.Add(label1);
             groupBox1.Controls.Add(textBox1);
             groupBox1.Controls.Add(textBox2);
-            groupBox1.Location = new Point(285, 103);
-            groupBox1.Margin = new Padding(3, 4, 3, 4);
+            groupBox1.Location = new Point(249, 77);
             groupBox1.Name = "groupBox1";
-            groupBox1.Padding = new Padding(3, 4, 3, 4);
-            groupBox1.Size = new Size(229, 315);
+            groupBox1.Size = new Size(200, 236);
             groupBox1.TabIndex = 2;
             groupBox1.TabStop = false;
             groupBox1.Text = "Login";
@@ -76,40 +72,39 @@ namespace LibraryManagementSystem
             // button1
             // 
             button1.BackColor = Color.LightGreen;
-            button1.Location = new Point(72, 237);
-            button1.Margin = new Padding(3, 4, 3, 4);
+            button1.Location = new Point(63, 178);
             button1.Name = "button1";
-            button1.Size = new Size(86, 31);
+            button1.Size = new Size(75, 23);
             button1.TabIndex = 4;
             button1.Text = "login";
             button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(72, 129);
+            label2.Location = new Point(63, 97);
             label2.Name = "label2";
-            label2.Size = new Size(72, 20);
+            label2.Size = new Size(57, 15);
             label2.TabIndex = 3;
             label2.Text = "password";
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(72, 25);
+            label1.Location = new Point(63, 19);
             label1.Name = "label1";
-            label1.Size = new Size(73, 20);
+            label1.Size = new Size(59, 15);
             label1.TabIndex = 2;
             label1.Text = "username";
             // 
             // login
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Lavender;
-            ClientSize = new Size(914, 600);
+            ClientSize = new Size(800, 450);
             Controls.Add(groupBox1);
-            Margin = new Padding(3, 4, 3, 4);
             Name = "login";
             Text = "Form2";
             groupBox1.ResumeLayout(false);

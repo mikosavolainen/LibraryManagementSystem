@@ -19,7 +19,7 @@ namespace LibraryManagementSystem
 
                 using (MySqlConnection connection = new MySqlConnection(publix.Connect))
                 {
-                    string query = "SELECT * FROM users WHERE username = @Username AND password = @Password";
+                    string query = "SELECT * FROM members WHERE username = @Username AND password = @Password";
                     var command = new MySqlCommand(query, connection);
                     command.Parameters.AddWithValue("@Username", User);
                     command.Parameters.AddWithValue("@Password", Pass);
@@ -38,7 +38,7 @@ namespace LibraryManagementSystem
 
                         publix.Name = username;
                         publix.Password = password;
-                        
+
                     }
                     else
                     {
@@ -62,15 +62,9 @@ namespace LibraryManagementSystem
             }
         }
 
-
-        private void button1_Click_1(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
             logins(textBox1.Text, textBox2.Text);
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }
