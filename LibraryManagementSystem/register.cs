@@ -38,7 +38,6 @@ namespace LibraryManagementSystem
         {
             var log = new login();
             log.Show();
-            this.Close();
         
         }
     }
