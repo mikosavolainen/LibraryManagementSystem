@@ -33,11 +33,11 @@ namespace LibraryManagementSystem
         private void InitializeComponent()
         {
             textBox1 = new TextBox();
-            textBox2 = new TextBox();
             groupBox1 = new GroupBox();
             button1 = new Button();
             label2 = new Label();
             label1 = new Label();
+            maskedTextBox1 = new MaskedTextBox();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -48,20 +48,13 @@ namespace LibraryManagementSystem
             textBox1.Size = new Size(100, 23);
             textBox1.TabIndex = 0;
             // 
-            // textBox2
-            // 
-            textBox2.Location = new Point(45, 125);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(100, 23);
-            textBox2.TabIndex = 1;
-            // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(maskedTextBox1);
             groupBox1.Controls.Add(button1);
             groupBox1.Controls.Add(label2);
             groupBox1.Controls.Add(label1);
             groupBox1.Controls.Add(textBox1);
-            groupBox1.Controls.Add(textBox2);
             groupBox1.Location = new Point(22, 12);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(200, 236);
@@ -98,6 +91,14 @@ namespace LibraryManagementSystem
             label1.TabIndex = 2;
             label1.Text = "username";
             // 
+            // maskedTextBox1
+            // 
+            maskedTextBox1.Location = new Point(45, 126);
+            maskedTextBox1.Name = "maskedTextBox1";
+            maskedTextBox1.PasswordChar = '*';
+            maskedTextBox1.Size = new Size(100, 23);
+            maskedTextBox1.TabIndex = 5;
+            // 
             // login
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -115,11 +116,11 @@ namespace LibraryManagementSystem
         #endregion
 
         private TextBox textBox1;
-        private TextBox textBox2;
         private GroupBox groupBox1;
         private Label label2;
         private Label label1;
         private Button button1;
+        private MaskedTextBox maskedTextBox1;
     }
 }
 

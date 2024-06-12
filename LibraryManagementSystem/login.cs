@@ -1,4 +1,6 @@
 using MySql.Data.MySqlClient;
+using System.Security.Cryptography;
+using System.Text;
 using static Login.@public;
 
 namespace LibraryManagementSystem
@@ -14,40 +16,43 @@ namespace LibraryManagementSystem
         {
             try
             {
-
-
-
                 using (MySqlConnection connection = new MySqlConnection(publix.Connect))
                 {
-                    string query = "SELECT * FROM members WHERE username = @UserName AND password = @Password";
+                    string query = "SELECT * FROM members WHERE username = @UserName";
                     var command = new MySqlCommand(query, connection);
                     command.Parameters.AddWithValue("@Username", User);
-                    command.Parameters.AddWithValue("@Password", Pass);
                     connection.Open();
 
                     MySqlDataReader reader = command.ExecuteReader();
 
                     if (reader.Read())
                     {
+                        string storedPasswordHash = reader["Password"].ToString();
+                        string inputPasswordHash = HashPassword(Pass);
 
-                        string username = reader["UserName"].ToString();
-                        string email = "reader";
-                        string firstname = reader["FirstName"].ToString();
-                        string lastname = reader["LastName"].ToString();
-                        string phoneNumber = reader["PhoneNumber"].ToString();
-                        string password = reader["Password"].ToString();
+                        if (storedPasswordHash == inputPasswordHash)
+                        {
+                            string username = reader["UserName"].ToString();
+                            string email = "reader"; 
+                            string firstname = reader["FirstName"].ToString();
+                            string lastname = reader["LastName"].ToString();
+                            string phoneNumber = reader["PhoneNumber"].ToString();
 
-                        publix.Name = username;
-                        publix.Password = password;
-                        publix.Email = email;
-                        publix.PhoneNumber = phoneNumber;
-                        publix.Firstname = firstname;
-                        publix.Lastname = lastname;
+                            publix.Name = username;
+                            publix.Password = storedPasswordHash; 
+                            publix.Email = email;
+                            publix.PhoneNumber = phoneNumber;
+                            publix.Firstname = firstname;
+                            publix.Lastname = lastname;
 
-                        var log = new Profile();
-                        log.Show();
-                        this.Hide();
-
+                            var log = new Profile();
+                            log.Show();
+                            this.Hide();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Invalid username or password.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
                     else
                     {
@@ -59,21 +64,28 @@ namespace LibraryManagementSystem
             }
             catch (Exception ex)
             {
-                if (ex.Message == "Object cannot be cast from DBNull to other types.")
+                Console.WriteLine(ex.Message);
+                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private string HashPassword(string password)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
                 {
-                    logins(textBox1.Text, textBox2.Text);
+                    builder.Append(bytes[i].ToString("x2"));
                 }
-                else
-                {
-                    Console.WriteLine(ex.Message);
-                    MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                return builder.ToString();
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            logins(textBox1.Text, textBox2.Text);
+            logins(textBox1.Text, maskedTextBox1.Text);
         }
     }
 }
