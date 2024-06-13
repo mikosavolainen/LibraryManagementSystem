@@ -18,6 +18,7 @@ namespace LibraryManagementSystem
         {
             InitializeComponent();
             Lataatiedot();
+            LoadLoans();
         }
 
 
@@ -102,6 +103,38 @@ namespace LibraryManagementSystem
                 }
             }
         }
+
+
+
+        private void LoadLoans()
+        {
+            listBox1.Items.Clear();
+            string memberid = publix.ID;
+            string query = "SELECT b.Title, l.LoanDate, l.ReturnDate " + "FROM loans l " + "INNER JOIN books b ON l.BookID = b.BookID " + "WHERE l.MemberID = @MemberID";
+
+            using (MySqlConnection connection = new MySqlConnection(publix.Connect))
+            {
+                using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                {
+                    cmd.Parameters.AddWithValue("@MemberID", memberid);
+                    connection.Open();
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string title = reader.GetString("Title");
+                            DateTime loanDate = reader.GetDateTime("LoanDate");
+                            DateTime? returnDate = reader.IsDBNull(reader.GetOrdinal("ReturnDate")) ? (DateTime?)null : reader.GetDateTime("ReturnDate");
+
+                            string item = $"Book Name: {title} | Loan Date: {loanDate.ToShortDateString()} | Return Date: {(returnDate.HasValue ? returnDate.Value.ToShortDateString() : "Ei tiedossa")}";
+                            listBox1.Items.Add(item);
+                        }
+                    }
+                }
+            }
+        }
+
 
 
         private void label1_Click(object sender, EventArgs e)
