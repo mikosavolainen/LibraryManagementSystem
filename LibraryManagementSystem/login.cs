@@ -33,19 +33,19 @@ namespace LibraryManagementSystem
                         if (storedPasswordHash == inputPasswordHash)
                         {
                             string username = reader["UserName"].ToString();
-                            string email = "reader"; 
+                            string email = "reader";
                             string firstname = reader["FirstName"].ToString();
                             string lastname = reader["LastName"].ToString();
                             string phoneNumber = reader["PhoneNumber"].ToString();
 
                             publix.Name = username;
-                            publix.Password = storedPasswordHash; 
+                            publix.Password = storedPasswordHash;
                             publix.Email = email;
                             publix.PhoneNumber = phoneNumber;
                             publix.Firstname = firstname;
                             publix.Lastname = lastname;
 
-                            var log = new Profile();
+                            var log = new mainpage();
                             log.Show();
                             this.Hide();
                         }
@@ -86,6 +86,11 @@ namespace LibraryManagementSystem
         private void button1_Click(object sender, EventArgs e)
         {
             logins(textBox1.Text, maskedTextBox1.Text);
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }
