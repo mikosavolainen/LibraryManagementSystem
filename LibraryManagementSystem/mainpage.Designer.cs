@@ -32,6 +32,8 @@
             textBox1 = new TextBox();
             label1 = new Label();
             button1 = new Button();
+            buttonSearch = new Button();
+            buttonLoan = new Button();
             SuspendLayout();
             // 
             // listBox1
@@ -75,11 +77,31 @@
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
+            // buttonSearch
+            // 
+            buttonSearch.Location = new Point(25, 145);
+            buttonSearch.Name = "buttonSearch";
+            buttonSearch.Size = new Size(94, 29);
+            buttonSearch.TabIndex = 10;
+            buttonSearch.Text = "search";
+            buttonSearch.UseVisualStyleBackColor = true;
+            // 
+            // buttonLoan
+            // 
+            buttonLoan.Location = new Point(25, 326);
+            buttonLoan.Name = "buttonLoan";
+            buttonLoan.Size = new Size(94, 29);
+            buttonLoan.TabIndex = 11;
+            buttonLoan.Text = "Loan";
+            buttonLoan.UseVisualStyleBackColor = true;
+            // 
             // mainpage
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(975, 628);
+            Controls.Add(buttonLoan);
+            Controls.Add(buttonSearch);
             Controls.Add(button1);
             Controls.Add(label1);
             Controls.Add(textBox1);
@@ -97,5 +119,7 @@
         private TextBox textBox1;
         private Label label1;
         private Button button1;
+        private Button buttonSearch;
+        private Button buttonLoan;
     }
 }
