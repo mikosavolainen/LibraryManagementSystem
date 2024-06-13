@@ -39,7 +39,9 @@ namespace LibraryManagementSystem
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            var log = new Profile();
+            log.Show();
+            this.Hide();
         }
     }
 }
