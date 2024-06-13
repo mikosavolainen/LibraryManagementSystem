@@ -37,7 +37,10 @@ namespace LibraryManagementSystem
                             string firstname = reader["FirstName"].ToString();
                             string lastname = reader["LastName"].ToString();
                             string phoneNumber = reader["PhoneNumber"].ToString();
+                            string memberid = reader["MemberID"].ToString();
 
+
+                            publix.ID = memberid;
                             publix.Name = username;
                             publix.Password = storedPasswordHash;
                             publix.Email = email;

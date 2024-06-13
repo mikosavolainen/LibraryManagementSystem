@@ -7,6 +7,7 @@ namespace Login
     {
         public static class publix
         {
+            public static string ID { get; set; } = "0";
             public static string Name { get; set; } = "0";
             public static string Firstname { get; set; }
             public static string Lastname { get; set; }

@@ -23,13 +23,13 @@ namespace LibraryManagementSystem
 
         private void Lataatiedot()
         {
-            
-            string query = "SELECT FirstName, LastName, UserName, EmailAddress, Address, PhoneNumber FROM members WHERE MemberID = 5";
+            string memberid = publix.ID;
+            string query = "SELECT FirstName, LastName, UserName, EmailAddress, Address, PhoneNumber FROM members WHERE memberid = @MemberID";
 
             using (MySqlConnection connection = new MySqlConnection(publix.Connect))
             {
                 MySqlCommand command = new MySqlCommand(query, connection);
-
+                command.Parameters.AddWithValue("@MemberID", memberid);
                 try
                 {
                     connection.Open();
@@ -66,12 +66,14 @@ namespace LibraryManagementSystem
 
         private void Tallennatiedot()
         {
-            
-            string query = "UPDATE members SET FirstName = @FirstName, LastName = @LastName, UserName = @UserName, EmailAddress = @EmailAddress, Address = @Address, PhoneNumber = @PhoneNumber WHERE MemberID = 5";
+            string memberid = publix.ID;
+            string query = "UPDATE members SET FirstName = @FirstName, LastName = @LastName, UserName = @UserName, EmailAddress = @EmailAddress, Address = @Address, PhoneNumber = @PhoneNumber WHERE memberid = @MemberID";
 
             using (MySqlConnection connection = new MySqlConnection(publix.Connect))
             {
                 MySqlCommand command = new MySqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("@MemberID", memberid);
 
                 command.Parameters.AddWithValue("@FirstName", textBox3.Text);
                 command.Parameters.AddWithValue("@LastName", textBox2.Text);
