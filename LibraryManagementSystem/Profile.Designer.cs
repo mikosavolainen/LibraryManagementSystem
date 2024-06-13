@@ -180,14 +180,14 @@
             listBox1.ItemHeight = 15;
             listBox1.Location = new Point(416, 33);
             listBox1.Name = "listBox1";
-            listBox1.Size = new Size(213, 379);
+            listBox1.Size = new Size(737, 379);
             listBox1.TabIndex = 15;
             // 
             // Profile
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(688, 464);
+            ClientSize = new Size(1180, 464);
             Controls.Add(listBox1);
             Controls.Add(button2);
             Controls.Add(button1);
