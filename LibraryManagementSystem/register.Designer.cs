@@ -31,6 +31,8 @@
             textBox1 = new TextBox();
             textBox2 = new TextBox();
             groupBox1 = new GroupBox();
+            label9 = new Label();
+            textBox5 = new TextBox();
             button3 = new Button();
             label8 = new Label();
             textBox4 = new TextBox();
@@ -47,8 +49,6 @@
             button2 = new Button();
             label5 = new Label();
             groupBox2 = new GroupBox();
-            label9 = new Label();
-            textBox5 = new TextBox();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             SuspendLayout();
@@ -93,6 +93,23 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Register";
             groupBox1.Enter += groupBox1_Enter;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(73, 222);
+            label9.Name = "label9";
+            label9.Size = new Size(42, 15);
+            label9.TabIndex = 19;
+            label9.Text = "Adress";
+            // 
+            // textBox5
+            // 
+            textBox5.Location = new Point(171, 219);
+            textBox5.Name = "textBox5";
+            textBox5.Size = new Size(175, 23);
+            textBox5.TabIndex = 18;
+            textBox5.TextChanged += textBox5_TextChanged;
             // 
             // button3
             // 
@@ -157,7 +174,7 @@
             // maskedTextBox2
             // 
             maskedTextBox2.Location = new Point(171, 248);
-            maskedTextBox2.Mask = "(+358) 000-0000";
+            maskedTextBox2.Mask = "(+358) 00000000";
             maskedTextBox2.Name = "maskedTextBox2";
             maskedTextBox2.Size = new Size(175, 23);
             maskedTextBox2.TabIndex = 10;
@@ -237,24 +254,6 @@
             groupBox2.TabIndex = 7;
             groupBox2.TabStop = false;
             groupBox2.Text = "Already account?";
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Location = new Point(73, 222);
-            label9.Name = "label9";
-            label9.Size = new Size(42, 15);
-            label9.TabIndex = 19;
-            label9.Text = "Adress";
-            
-            // 
-            // textBox5
-            // 
-            textBox5.Location = new Point(171, 219);
-            textBox5.Name = "textBox5";
-            textBox5.Size = new Size(175, 23);
-            textBox5.TabIndex = 18;
-            textBox5.TextChanged += textBox5_TextChanged;
             // 
             // register
             // 

@@ -42,6 +42,8 @@
             textBox5 = new TextBox();
             button1 = new Button();
             button2 = new Button();
+            mySqlCommand1 = new MySql.Data.MySqlClient.MySqlCommand();
+            listBox1 = new ListBox();
             SuspendLayout();
             // 
             // label2
@@ -104,7 +106,7 @@
             // maskedTextBox1
             // 
             maskedTextBox1.Location = new Point(144, 110);
-            maskedTextBox1.Mask = "(+358) 000-0000";
+            maskedTextBox1.Mask = "(+358) 00000000";
             maskedTextBox1.Name = "maskedTextBox1";
             maskedTextBox1.Size = new Size(142, 23);
             maskedTextBox1.TabIndex = 7;
@@ -165,11 +167,28 @@
             button2.Visible = false;
             button2.Click += button2_Click_1;
             // 
+            // mySqlCommand1
+            // 
+            mySqlCommand1.CacheAge = 0;
+            mySqlCommand1.Connection = null;
+            mySqlCommand1.EnableCaching = false;
+            mySqlCommand1.Transaction = null;
+            // 
+            // listBox1
+            // 
+            listBox1.FormattingEnabled = true;
+            listBox1.ItemHeight = 15;
+            listBox1.Location = new Point(416, 33);
+            listBox1.Name = "listBox1";
+            listBox1.Size = new Size(213, 379);
+            listBox1.TabIndex = 15;
+            // 
             // Profile
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(688, 464);
+            Controls.Add(listBox1);
             Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(textBox5);
@@ -207,5 +226,7 @@
         private TextBox textBox5;
         private Button button1;
         private Button button2;
+        private MySql.Data.MySqlClient.MySqlCommand mySqlCommand1;
+        private ListBox listBox1;
     }
 }
