@@ -44,12 +44,16 @@
             button2 = new Button();
             mySqlCommand1 = new MySql.Data.MySqlClient.MySqlCommand();
             listBox1 = new ListBox();
+            maskedTextBox2 = new MaskedTextBox();
+            label7 = new Label();
+            button3 = new Button();
+            button4 = new Button();
             SuspendLayout();
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(29, 36);
+            label2.Location = new Point(25, 97);
             label2.Name = "label2";
             label2.Size = new Size(67, 15);
             label2.TabIndex = 1;
@@ -58,7 +62,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(30, 61);
+            label1.Location = new Point(26, 122);
             label1.Name = "label1";
             label1.Size = new Size(66, 15);
             label1.TabIndex = 2;
@@ -68,7 +72,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(30, 86);
+            label3.Location = new Point(26, 147);
             label3.Name = "label3";
             label3.Size = new Size(68, 15);
             label3.TabIndex = 3;
@@ -78,7 +82,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(29, 110);
+            label4.Location = new Point(25, 171);
             label4.Name = "label4";
             label4.Size = new Size(89, 15);
             label4.TabIndex = 4;
@@ -88,7 +92,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(29, 138);
+            label5.Location = new Point(25, 199);
             label5.Name = "label5";
             label5.Size = new Size(39, 15);
             label5.TabIndex = 5;
@@ -97,7 +101,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(29, 164);
+            label6.Location = new Point(25, 225);
             label6.Name = "label6";
             label6.Size = new Size(52, 15);
             label6.TabIndex = 6;
@@ -105,7 +109,7 @@
             // 
             // maskedTextBox1
             // 
-            maskedTextBox1.Location = new Point(144, 110);
+            maskedTextBox1.Location = new Point(140, 171);
             maskedTextBox1.Mask = "(+358) 00000000";
             maskedTextBox1.Name = "maskedTextBox1";
             maskedTextBox1.Size = new Size(142, 23);
@@ -113,42 +117,42 @@
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(144, 83);
+            textBox1.Location = new Point(140, 144);
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(142, 23);
             textBox1.TabIndex = 8;
             // 
             // textBox2
             // 
-            textBox2.Location = new Point(144, 58);
+            textBox2.Location = new Point(140, 119);
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(142, 23);
             textBox2.TabIndex = 9;
             // 
             // textBox3
             // 
-            textBox3.Location = new Point(144, 33);
+            textBox3.Location = new Point(140, 94);
             textBox3.Name = "textBox3";
             textBox3.Size = new Size(142, 23);
             textBox3.TabIndex = 10;
             // 
             // textBox4
             // 
-            textBox4.Location = new Point(144, 135);
+            textBox4.Location = new Point(140, 196);
             textBox4.Name = "textBox4";
             textBox4.Size = new Size(142, 23);
             textBox4.TabIndex = 11;
             // 
             // textBox5
             // 
-            textBox5.Location = new Point(144, 161);
+            textBox5.Location = new Point(140, 222);
             textBox5.Name = "textBox5";
             textBox5.Size = new Size(142, 23);
             textBox5.TabIndex = 12;
             // 
             // button1
             // 
-            button1.Location = new Point(29, 200);
+            button1.Location = new Point(26, 285);
             button1.Name = "button1";
             button1.Size = new Size(75, 23);
             button1.TabIndex = 13;
@@ -158,7 +162,7 @@
             // 
             // button2
             // 
-            button2.Location = new Point(121, 200);
+            button2.Location = new Point(118, 285);
             button2.Name = "button2";
             button2.Size = new Size(75, 23);
             button2.TabIndex = 14;
@@ -183,11 +187,52 @@
             listBox1.Size = new Size(737, 379);
             listBox1.TabIndex = 15;
             // 
+            // maskedTextBox2
+            // 
+            maskedTextBox2.Location = new Point(140, 253);
+            maskedTextBox2.Name = "maskedTextBox2";
+            maskedTextBox2.Size = new Size(100, 23);
+            maskedTextBox2.TabIndex = 16;
+            maskedTextBox2.MaskInputRejected += maskedTextBox2_MaskInputRejected;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(25, 256);
+            label7.Name = "label7";
+            label7.Size = new Size(60, 15);
+            label7.TabIndex = 17;
+            label7.Text = "Password:";
+            // 
+            // button3
+            // 
+            button3.Location = new Point(19, 12);
+            button3.Name = "button3";
+            button3.Size = new Size(75, 23);
+            button3.TabIndex = 18;
+            button3.Text = "Home";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
+            // 
+            // button4
+            // 
+            button4.Location = new Point(17, 429);
+            button4.Name = "button4";
+            button4.Size = new Size(75, 23);
+            button4.TabIndex = 19;
+            button4.Text = "Log out";
+            button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
+            // 
             // Profile
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1180, 464);
+            Controls.Add(button4);
+            Controls.Add(button3);
+            Controls.Add(label7);
+            Controls.Add(maskedTextBox2);
             Controls.Add(listBox1);
             Controls.Add(button2);
             Controls.Add(button1);
@@ -228,5 +273,9 @@
         private Button button2;
         private MySql.Data.MySqlClient.MySqlCommand mySqlCommand1;
         private ListBox listBox1;
+        private MaskedTextBox maskedTextBox2;
+        private Label label7;
+        private Button button3;
+        private Button button4;
     }
 }

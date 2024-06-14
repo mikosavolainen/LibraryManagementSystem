@@ -8,7 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Security.Cryptography;
 using static Login.@public;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace LibraryManagementSystem
 {
@@ -67,6 +70,18 @@ namespace LibraryManagementSystem
 
         private void Tallennatiedot()
         {
+
+            if (string.IsNullOrWhiteSpace(textBox3.Text) ||
+                string.IsNullOrWhiteSpace(textBox2.Text) ||
+                string.IsNullOrWhiteSpace(textBox1.Text) ||
+                string.IsNullOrWhiteSpace(textBox4.Text) ||
+                string.IsNullOrWhiteSpace(textBox5.Text) ||
+                string.IsNullOrWhiteSpace(maskedTextBox1.Text))
+            {
+                MessageBox.Show("Kaikki kentät on täytettävä.");
+                return;
+            }
+
             string memberid = publix.ID;
             string query = "UPDATE members SET FirstName = @FirstName, LastName = @LastName, UserName = @UserName, EmailAddress = @EmailAddress, Address = @Address, PhoneNumber = @PhoneNumber WHERE memberid = @MemberID";
 
@@ -75,7 +90,6 @@ namespace LibraryManagementSystem
                 MySqlCommand command = new MySqlCommand(query, connection);
 
                 command.Parameters.AddWithValue("@MemberID", memberid);
-
                 command.Parameters.AddWithValue("@FirstName", textBox3.Text);
                 command.Parameters.AddWithValue("@LastName", textBox2.Text);
                 command.Parameters.AddWithValue("@UserName", textBox1.Text);
@@ -90,19 +104,20 @@ namespace LibraryManagementSystem
 
                     if (rowsAffected > 0)
                     {
-                        MessageBox.Show("Saved successfully.");
+                        MessageBox.Show("Tallennettu onnistuneesti.");
                     }
                     else
                     {
-                        MessageBox.Show("No data was updated.");
+                        MessageBox.Show("Tietoja ei päivitetty.");
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error: " + ex.Message);
+                    MessageBox.Show("Virhe: " + ex.Message);
                 }
             }
         }
+
 
 
 
@@ -162,17 +177,85 @@ namespace LibraryManagementSystem
 
         }
 
+
+
+        private void VerifyUser()
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(publix.Connect))
+                {
+                    string memberid = publix.ID;
+                    string query = "SELECT Password FROM members WHERE memberid = @MemberID";
+                    var command = new MySqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@MemberID", memberid);
+                    connection.Open();
+
+                    MySqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        string storedPasswordHash = reader["Password"].ToString();
+                        string inputPasswordHash = HashPassword(maskedTextBox2.Text);
+
+                        if (storedPasswordHash == inputPasswordHash)
+                        {
+                            publix.Password = storedPasswordHash;
+
+                            button2.Visible = true;
+                            textBox1.Enabled = true;
+                            textBox2.Enabled = true;
+                            textBox3.Enabled = true;
+                            textBox4.Enabled = true;
+                            textBox5.Enabled = true;
+                            maskedTextBox1.Enabled = true;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Invalid password.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("User ID not found.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
+                    reader.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+        private string HashPassword(string password)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString("x2"));
+                }
+                return builder.ToString();
+            }
+        }
+
+
+
         private void button1_Click(object sender, EventArgs e)
         {
-            button2.Visible = true;
-            textBox1.Enabled = true;
-            textBox2.Enabled = true;
-            textBox3.Enabled = true;
-            textBox4.Enabled = true;
-            textBox5.Enabled = true;
-            maskedTextBox1.Enabled = true;
 
+            maskedTextBox2.Visible = true;
+            label7.Visible = true;
+            VerifyUser();
         }
+
+
 
         private void button2_Click_1(object sender, EventArgs e)
         {
@@ -185,6 +268,34 @@ namespace LibraryManagementSystem
             textBox5.Enabled = false;
             maskedTextBox1.Enabled = false;
             button2.Visible = false;
+        }
+
+        private void maskedTextBox2_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var log = new mainpage();
+            log.Show();
+            this.Hide();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            publix.ID = "0";
+            publix.Name = "0";
+            publix.Password = "0";
+            publix.Email = "0";
+            publix.PhoneNumber = "0";
+            publix.Firstname = "0";
+            publix.Lastname = "0";
+
+
+            var log = new login();
+            log.Show();
+            this.Hide();
         }
     }
 }
