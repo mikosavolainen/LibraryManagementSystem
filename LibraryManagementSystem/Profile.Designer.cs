@@ -191,7 +191,7 @@
             // 
             maskedTextBox2.Location = new Point(140, 253);
             maskedTextBox2.Name = "maskedTextBox2";
-            maskedTextBox2.Size = new Size(100, 23);
+            maskedTextBox2.Size = new Size(142, 23);
             maskedTextBox2.TabIndex = 16;
             maskedTextBox2.MaskInputRejected += maskedTextBox2_MaskInputRejected;
             // 
