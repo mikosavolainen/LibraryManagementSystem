@@ -48,6 +48,7 @@
             label7 = new Label();
             button3 = new Button();
             button4 = new Button();
+            button5 = new Button();
             SuspendLayout();
             // 
             // label2
@@ -224,11 +225,22 @@
             button4.UseVisualStyleBackColor = true;
             button4.Click += button4_Click;
             // 
+            // button5
+            // 
+            button5.Location = new Point(416, 418);
+            button5.Name = "button5";
+            button5.Size = new Size(103, 23);
+            button5.TabIndex = 20;
+            button5.Text = "Return book";
+            button5.UseVisualStyleBackColor = true;
+            button5.Click += button5_Click;
+            // 
             // Profile
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1180, 464);
+            Controls.Add(button5);
             Controls.Add(button4);
             Controls.Add(button3);
             Controls.Add(label7);
@@ -277,5 +289,6 @@
         private Label label7;
         private Button button3;
         private Button button4;
+        private Button button5;
     }
 }

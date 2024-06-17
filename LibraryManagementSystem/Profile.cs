@@ -125,7 +125,7 @@ namespace LibraryManagementSystem
         {
             listBox1.Items.Clear();
             string memberid = publix.ID;
-            string query = "SELECT b.Title, l.LoanDate, l.ReturnDate " + "FROM loans l " + "INNER JOIN books b ON l.BookID = b.BookID " + "WHERE l.MemberID = @MemberID";
+            string query = "SELECT b.Title, l.LoanDate, l.ReturnDate FROM loans l INNER JOIN books b ON l.BookID = b.BookID WHERE l.MemberID = @MemberID";
 
             using (MySqlConnection connection = new MySqlConnection(publix.Connect))
             {
@@ -149,6 +149,10 @@ namespace LibraryManagementSystem
                 }
             }
         }
+
+
+
+
 
 
 
@@ -297,5 +301,53 @@ namespace LibraryManagementSystem
             log.Show();
             this.Hide();
         }
+
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            if (listBox1.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a book to return.");
+                return;
+            }
+
+            string selectedItem = listBox1.SelectedItem.ToString();
+            string[] itemParts = selectedItem.Split('|');
+            if (itemParts.Length < 3)
+            {
+                MessageBox.Show("The selected item is in an incorrect format.");
+                return;
+            }
+
+            
+            string titlePart = itemParts[0].Trim();
+            string bookTitle = titlePart.Replace("Book Name: ", "").Trim();
+            string memberId = publix.ID;
+
+            
+            string query = "DELETE FROM loans WHERE BookID = (SELECT BookID FROM books WHERE Title = @BookTitle) AND MemberID = @MemberID";
+
+            using (MySqlConnection connection = new MySqlConnection(publix.Connect))
+            {
+                MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@BookTitle", bookTitle);
+                command.Parameters.AddWithValue("@MemberID", memberId);
+
+                    connection.Open();
+                    int rowsAffected = command.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
+                    {
+                        MessageBox.Show("Book returned successfully.");
+                        LoadLoans(); 
+                    }
+                    else
+                    {
+                        MessageBox.Show("No loan record found for the selected book.");
+                    }
+                
+            }
+        }
+
     }
 }
