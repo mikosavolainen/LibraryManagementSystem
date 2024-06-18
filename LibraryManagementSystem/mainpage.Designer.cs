@@ -64,7 +64,6 @@
             label1.Size = new Size(42, 15);
             label1.TabIndex = 5;
             label1.Text = "Search";
-            label1.Click += label1_Click;
             // 
             // button1
             // 
