@@ -131,9 +131,6 @@ namespace LibraryManagementSystem
             log.Show();
             this.Hide();
         }
-        private void label1_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("don't click me");
-        }
+        
     }
 }
