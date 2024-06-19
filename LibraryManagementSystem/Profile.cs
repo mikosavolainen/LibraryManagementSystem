@@ -319,12 +319,12 @@ namespace LibraryManagementSystem
                 return;
             }
 
-            
+
             string titlePart = itemParts[0].Trim();
             string bookTitle = titlePart.Replace("Book Name: ", "").Trim();
             string memberId = publix.ID;
 
-            
+
             string query = "DELETE FROM loans WHERE BookID = (SELECT BookID FROM books WHERE Title = @BookTitle) AND MemberID = @MemberID";
 
             using (MySqlConnection connection = new MySqlConnection(publix.Connect))
@@ -333,21 +333,27 @@ namespace LibraryManagementSystem
                 command.Parameters.AddWithValue("@BookTitle", bookTitle);
                 command.Parameters.AddWithValue("@MemberID", memberId);
 
-                    connection.Open();
-                    int rowsAffected = command.ExecuteNonQuery();
+                connection.Open();
+                int rowsAffected = command.ExecuteNonQuery();
 
-                    if (rowsAffected > 0)
-                    {
-                        MessageBox.Show("Book returned successfully.");
-                        LoadLoans(); 
-                    }
-                    else
-                    {
-                        MessageBox.Show("No loan record found for the selected book.");
-                    }
-                
+                if (rowsAffected > 0)
+                {
+                    MessageBox.Show("Book returned successfully.");
+                    LoadLoans();
+                }
+                else
+                {
+                    MessageBox.Show("No loan record found for the selected book.");
+                }
+
             }
         }
 
+        private void button6_Click(object sender, EventArgs e)
+        {
+            var log = new Admin();
+            log.Show();
+            this.Hide();
+        }
     }
 }

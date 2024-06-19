@@ -1,6 +1,6 @@
 ﻿namespace LibraryManagementSystem
 {
-    partial class Profile
+    partial class Admin
     {
         /// <summary>
         /// Required designer variable.
@@ -41,15 +41,10 @@
             textBox4 = new TextBox();
             textBox5 = new TextBox();
             button1 = new Button();
-            button2 = new Button();
             mySqlCommand1 = new MySql.Data.MySqlClient.MySqlCommand();
             listBox1 = new ListBox();
-            maskedTextBox2 = new MaskedTextBox();
-            label7 = new Label();
             button3 = new Button();
             button4 = new Button();
-            button5 = new Button();
-            button6 = new Button();
             SuspendLayout();
             // 
             // label2
@@ -154,24 +149,13 @@
             // 
             // button1
             // 
-            button1.Location = new Point(26, 285);
+            button1.Location = new Point(25, 256);
             button1.Name = "button1";
             button1.Size = new Size(75, 23);
             button1.TabIndex = 13;
             button1.Text = "Change informations";
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
-            // 
-            // button2
-            // 
-            button2.Location = new Point(118, 285);
-            button2.Name = "button2";
-            button2.Size = new Size(75, 23);
-            button2.TabIndex = 14;
-            button2.Text = "Save";
-            button2.UseVisualStyleBackColor = true;
-            button2.Visible = false;
-            button2.Click += button2_Click_1;
             // 
             // mySqlCommand1
             // 
@@ -188,23 +172,6 @@
             listBox1.Name = "listBox1";
             listBox1.Size = new Size(737, 379);
             listBox1.TabIndex = 15;
-            // 
-            // maskedTextBox2
-            // 
-            maskedTextBox2.Location = new Point(140, 253);
-            maskedTextBox2.Name = "maskedTextBox2";
-            maskedTextBox2.Size = new Size(142, 23);
-            maskedTextBox2.TabIndex = 16;
-            maskedTextBox2.MaskInputRejected += maskedTextBox2_MaskInputRejected;
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Location = new Point(25, 256);
-            label7.Name = "label7";
-            label7.Size = new Size(60, 15);
-            label7.TabIndex = 17;
-            label7.Text = "Password:";
             // 
             // button3
             // 
@@ -226,39 +193,14 @@
             button4.UseVisualStyleBackColor = true;
             button4.Click += button4_Click;
             // 
-            // button5
-            // 
-            button5.Location = new Point(416, 418);
-            button5.Name = "button5";
-            button5.Size = new Size(103, 23);
-            button5.TabIndex = 20;
-            button5.Text = "Return book";
-            button5.UseVisualStyleBackColor = true;
-            button5.Click += button5_Click;
-            // 
-            // button6
-            // 
-            button6.Location = new Point(118, 12);
-            button6.Name = "button6";
-            button6.Size = new Size(75, 23);
-            button6.TabIndex = 21;
-            button6.Text = "Admin";
-            button6.UseVisualStyleBackColor = true;
-            button6.Click += button6_Click;
-            // 
-            // Profile
+            // Admin
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1180, 464);
-            Controls.Add(button6);
-            Controls.Add(button5);
             Controls.Add(button4);
             Controls.Add(button3);
-            Controls.Add(label7);
-            Controls.Add(maskedTextBox2);
             Controls.Add(listBox1);
-            Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(textBox5);
             Controls.Add(textBox4);
@@ -272,7 +214,7 @@
             Controls.Add(label3);
             Controls.Add(label1);
             Controls.Add(label2);
-            Name = "Profile";
+            Name = "Admin";
             Text = "Form1";
             Load += Profile_Load;
             ResumeLayout(false);
@@ -302,6 +244,5 @@
         private Button button3;
         private Button button4;
         private Button button5;
-        private Button button6;
     }
 }
