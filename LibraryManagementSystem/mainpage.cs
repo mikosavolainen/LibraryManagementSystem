@@ -84,16 +84,31 @@ namespace LibraryManagementSystem
             {
                 using (MySqlConnection connection = new MySqlConnection(publix.Connect))
                 {
+                    connection.Open();
+
+                    // Check current number of loans for the user
+                    string countQuery = "SELECT COUNT(*) FROM loans WHERE MemberID = @MemberID AND ReturnDate > NOW()";
+                    var countCommand = new MySqlCommand(countQuery, connection);
+                    countCommand.Parameters.AddWithValue("@MemberID", publix.ID);
+
+                    int currentLoans = Convert.ToInt32(countCommand.ExecuteScalar());
+
+                    if (currentLoans >= 5)
+                    {
+                        MessageBox.Show("You have already loaned the maximum number of books (5).", "Loan Limit Reached", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    // Proceed with loaning the book
                     DateTime loanDate = DateTime.Now;
                     DateTime returnDate = loanDate.AddMonths(1);
-                    string query = "INSERT INTO loans (BookID, MemberID, LoanDate, ReturnDate) VALUES (@BookID, @MemberID, @LoanDate, @returnDate)";
+                    string query = "INSERT INTO loans (BookID, MemberID, LoanDate, ReturnDate) VALUES (@BookID, @MemberID, @LoanDate, @ReturnDate)";
                     var command = new MySqlCommand(query, connection);
                     command.Parameters.AddWithValue("@BookID", bookID);
                     command.Parameters.AddWithValue("@MemberID", publix.ID);
-                    command.Parameters.AddWithValue("@LoanDate", DateTime.Now);
-                    command.Parameters.AddWithValue("@returnDate", returnDate);
+                    command.Parameters.AddWithValue("@LoanDate", loanDate);
+                    command.Parameters.AddWithValue("@ReturnDate", returnDate);
 
-                    connection.Open();
                     command.ExecuteNonQuery();
                     MessageBox.Show("Book loaned successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -104,6 +119,7 @@ namespace LibraryManagementSystem
                 MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         private void buttonLoan_Click(object sender, EventArgs e)
         {
