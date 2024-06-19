@@ -34,7 +34,6 @@
             button1 = new Button();
             buttonSearch = new Button();
             buttonLoan = new Button();
-            button2 = new Button();
             SuspendLayout();
             // 
             // listBox1
@@ -94,21 +93,11 @@
             buttonLoan.Text = "Loan";
             buttonLoan.UseVisualStyleBackColor = true;
             // 
-            // button2
-            // 
-            button2.Location = new Point(687, 88);
-            button2.Name = "button2";
-            button2.Size = new Size(94, 29);
-            button2.TabIndex = 12;
-            button2.Text = "button2";
-            button2.UseVisualStyleBackColor = true;
-            // 
             // mainpage
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(975, 628);
-            Controls.Add(button2);
             Controls.Add(buttonLoan);
             Controls.Add(buttonSearch);
             Controls.Add(button1);
@@ -130,6 +119,5 @@
         private Button button1;
         private Button buttonSearch;
         private Button buttonLoan;
-        private Button button2;
     }
 }
