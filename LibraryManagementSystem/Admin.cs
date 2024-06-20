@@ -79,7 +79,7 @@ namespace LibraryManagementSystem
                         textBox4.Text = reader["EmailAddress"].ToString();
                         textBox5.Text = reader["Address"].ToString();
                         maskedTextBox1.Text = reader["PhoneNumber"].ToString();
-                        comboBox1.SelectedItem = reader["Role"].ToString(); // Asetetaan rooli comboBoxiin
+                        comboBox1.SelectedItem = reader["Role"].ToString(); 
                     }
 
                     reader.Close();
@@ -121,7 +121,7 @@ namespace LibraryManagementSystem
                 command.Parameters.AddWithValue("@EmailAddress", textBox4.Text);
                 command.Parameters.AddWithValue("@Address", textBox5.Text);
                 command.Parameters.AddWithValue("@PhoneNumber", maskedTextBox1.Text);
-                command.Parameters.AddWithValue("@Role", comboBox1.SelectedItem.ToString()); // Lisätään rooli päivityskyselyyn
+                command.Parameters.AddWithValue("@Role", comboBox1.SelectedItem.ToString());
 
                 try
                 {
