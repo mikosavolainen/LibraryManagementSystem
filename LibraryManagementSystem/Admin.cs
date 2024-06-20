@@ -1,17 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Security.Cryptography;
 using static Login.@public;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace LibraryManagementSystem
 {
@@ -21,6 +11,7 @@ namespace LibraryManagementSystem
         {
             InitializeComponent();
             LoadUsers();
+            listBox1.SelectedIndexChanged += new EventHandler(listBox1_SelectedIndexChanged);
         }
 
         private void LoadUsers()
@@ -55,21 +46,20 @@ namespace LibraryManagementSystem
             }
         }
 
-
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (listBox1.SelectedItem != null)
-            {
-                string selectedItem = listBox1.SelectedItem.ToString();
-                string memberID = selectedItem.Substring(selectedItem.LastIndexOf('(') + 1).TrimEnd(')');
+            if (listBox1.SelectedIndex == -1)
+                return;
 
-                LoadUserDetails(memberID);
-            }
+            string selectedItem = listBox1.SelectedItem.ToString();
+            string memberID = selectedItem.Substring(selectedItem.LastIndexOf('(') + 1).TrimEnd(')');
+
+            LoadUserDetails(memberID);
         }
 
         private void LoadUserDetails(string memberID)
         {
-            string query = "SELECT FirstName, LastName, UserName, EmailAddress, Address, PhoneNumber FROM members WHERE MemberID = @MemberID";
+            string query = "SELECT FirstName, LastName, UserName, EmailAddress, Address, PhoneNumber, Role FROM members WHERE MemberID = @MemberID";
 
             using (MySqlConnection connection = new MySqlConnection(publix.Connect))
             {
@@ -83,19 +73,13 @@ namespace LibraryManagementSystem
 
                     if (reader.Read())
                     {
-                        textBox1.Enabled = false;
-                        textBox2.Enabled = false;
-                        textBox3.Enabled = false;
-                        textBox4.Enabled = false;
-                        textBox5.Enabled = false;
-                        maskedTextBox1.Enabled = false;
-
                         textBox1.Text = reader["UserName"].ToString();
                         textBox2.Text = reader["LastName"].ToString();
                         textBox3.Text = reader["FirstName"].ToString();
                         textBox4.Text = reader["EmailAddress"].ToString();
                         textBox5.Text = reader["Address"].ToString();
                         maskedTextBox1.Text = reader["PhoneNumber"].ToString();
+                        comboBox1.SelectedItem = reader["Role"].ToString(); // Asetetaan rooli comboBoxiin
                     }
 
                     reader.Close();
@@ -107,62 +91,63 @@ namespace LibraryManagementSystem
             }
         }
 
-
-
-
-
-
-
-        private void label1_Click(object sender, EventArgs e)
+        private void Tallennatiedot()
         {
+            if (string.IsNullOrWhiteSpace(textBox3.Text) ||
+                string.IsNullOrWhiteSpace(textBox2.Text) ||
+                string.IsNullOrWhiteSpace(textBox1.Text) ||
+                string.IsNullOrWhiteSpace(textBox4.Text) ||
+                string.IsNullOrWhiteSpace(textBox5.Text) ||
+                string.IsNullOrWhiteSpace(maskedTextBox1.Text) ||
+                comboBox1.SelectedItem == null)
+            {
+                MessageBox.Show("Kaikki kentät on täytettävä.");
+                return;
+            }
 
+            string selectedItem = listBox1.SelectedItem.ToString();
+            string memberID = selectedItem.Substring(selectedItem.LastIndexOf('(') + 1).TrimEnd(')');
+            string memberid = memberID;
+            string query = "UPDATE members SET FirstName = @FirstName, LastName = @LastName, UserName = @UserName, EmailAddress = @EmailAddress, Address = @Address, PhoneNumber = @PhoneNumber, Role = @Role WHERE memberid = @MemberID";
+
+            using (MySqlConnection connection = new MySqlConnection(publix.Connect))
+            {
+                MySqlCommand command = new MySqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("@MemberID", memberid);
+                command.Parameters.AddWithValue("@FirstName", textBox3.Text);
+                command.Parameters.AddWithValue("@LastName", textBox2.Text);
+                command.Parameters.AddWithValue("@UserName", textBox1.Text);
+                command.Parameters.AddWithValue("@EmailAddress", textBox4.Text);
+                command.Parameters.AddWithValue("@Address", textBox5.Text);
+                command.Parameters.AddWithValue("@PhoneNumber", maskedTextBox1.Text);
+                command.Parameters.AddWithValue("@Role", comboBox1.SelectedItem.ToString()); // Lisätään rooli päivityskyselyyn
+
+                try
+                {
+                    connection.Open();
+                    int rowsAffected = command.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
+                    {
+                        MessageBox.Show("Tallennettu onnistuneesti.");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Tietoja ei päivitetty.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Virhe: " + ex.Message);
+                }
+            }
         }
-
-        private void Profile_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
 
 
         private void button1_Click(object sender, EventArgs e)
         {
-
-            maskedTextBox2.Visible = true;
-            label7.Visible = true;
-        }
-
-
-
-        private void button2_Click_1(object sender, EventArgs e)
-        {
-
-            textBox1.Enabled = false;
-            textBox2.Enabled = false;
-            textBox3.Enabled = false;
-            textBox4.Enabled = false;
-            textBox5.Enabled = false;
-            maskedTextBox1.Enabled = false;
-            button2.Visible = false;
-        }
-
-        private void maskedTextBox2_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
-        {
+            Tallennatiedot();
 
         }
 
@@ -183,16 +168,32 @@ namespace LibraryManagementSystem
             publix.Firstname = "0";
             publix.Lastname = "0";
 
-
             var log = new login();
             log.Show();
             this.Hide();
         }
 
 
-        private void button5_Click(object sender, EventArgs e)
+
+        private void Profile_Load(object sender, EventArgs e)
         {
         }
 
+        private void label1_Click_1(object sender, EventArgs e)
+        {
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void textBox6_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

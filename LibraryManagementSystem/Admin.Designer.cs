@@ -45,6 +45,8 @@
             listBox1 = new ListBox();
             button3 = new Button();
             button4 = new Button();
+            label8 = new Label();
+            comboBox1 = new ComboBox();
             SuspendLayout();
             // 
             // label2
@@ -149,7 +151,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(25, 256);
+            button1.Location = new Point(19, 286);
             button1.Name = "button1";
             button1.Size = new Size(75, 23);
             button1.TabIndex = 13;
@@ -193,11 +195,32 @@
             button4.UseVisualStyleBackColor = true;
             button4.Click += button4_Click;
             // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(26, 249);
+            label8.Name = "label8";
+            label8.Size = new Size(33, 15);
+            label8.TabIndex = 20;
+            label8.Text = "Role:";
+            
+            // 
+            // comboBox1
+            // 
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Items.AddRange(new object[] { "user", "admin" });
+            comboBox1.Location = new Point(140, 246);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(142, 23);
+            comboBox1.TabIndex = 22;
+            // 
             // Admin
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1180, 464);
+            Controls.Add(comboBox1);
+            Controls.Add(label8);
             Controls.Add(button4);
             Controls.Add(button3);
             Controls.Add(listBox1);
@@ -244,5 +267,7 @@
         private Button button3;
         private Button button4;
         private Button button5;
+        private Label label8;
+        private ComboBox comboBox1;
     }
 }

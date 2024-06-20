@@ -24,13 +24,14 @@ namespace LibraryManagementSystem
             InitializeComponent();
             Lataatiedot();
             LoadLoans();
+            
         }
 
 
         private void Lataatiedot()
         {
             string memberid = publix.ID;
-            string query = "SELECT FirstName, LastName, UserName, EmailAddress, Address, PhoneNumber FROM members WHERE memberid = @MemberID";
+            string query = "SELECT FirstName, LastName, UserName, EmailAddress, Address, PhoneNumber, Role FROM members WHERE memberid = @MemberID";
 
             using (MySqlConnection connection = new MySqlConnection(publix.Connect))
             {
@@ -50,14 +51,22 @@ namespace LibraryManagementSystem
                         textBox5.Enabled = false;
                         maskedTextBox1.Enabled = false;
 
-
-
                         textBox1.Text = reader["UserName"].ToString();
                         textBox2.Text = reader["LastName"].ToString();
                         textBox3.Text = reader["FirstName"].ToString();
                         textBox4.Text = reader["EmailAddress"].ToString();
                         textBox5.Text = reader["Address"].ToString();
                         maskedTextBox1.Text = reader["PhoneNumber"].ToString();
+
+                        string role = reader["Role"].ToString();
+                        if (role == "admin")
+                        {
+                            button6.Visible = true; 
+                        }
+                        else
+                        {
+                            button6.Visible = false; 
+                        }
                     }
 
                     reader.Close();
@@ -68,6 +77,7 @@ namespace LibraryManagementSystem
                 }
             }
         }
+
 
 
         private void Tallennatiedot()
