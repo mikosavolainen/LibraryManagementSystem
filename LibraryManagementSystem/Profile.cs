@@ -12,11 +12,13 @@ using System.Security.Cryptography;
 using static Login.@public;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using System.Net;
 
 namespace LibraryManagementSystem
 {
     public partial class Profile : Form
     {
+        private Dictionary<string, string> bookIdMap = new Dictionary<string, string>();
         public Profile()
         {
             InitializeComponent();
@@ -136,6 +138,7 @@ namespace LibraryManagementSystem
 
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
+                        bookIdMap.Clear();
                         while (reader.Read())
                         {
                             string title = reader.GetString("Title");
@@ -288,13 +291,13 @@ namespace LibraryManagementSystem
 
         private void button4_Click(object sender, EventArgs e)
         {
-            publix.ID = "0";
-            publix.Name = "0";
-            publix.Password = "0";
-            publix.Email = "0";
-            publix.PhoneNumber = "0";
-            publix.Firstname = "0";
-            publix.Lastname = "0";
+            publix.ID = null;
+            publix.Name = null;
+            publix.Password = null;
+            publix.Email = null;
+            publix.PhoneNumber = null;
+            publix.Firstname = null;
+            publix.Lastname = null;
 
 
             var log = new login();
@@ -324,18 +327,30 @@ namespace LibraryManagementSystem
             string bookTitle = titlePart.Replace("Book Name: ", "").Trim();
             string memberId = publix.ID;
 
-
+            string query2 = "UPDATE books SET AvailableCopies = AvailableCopies + 1 WHERE BookID = (SELECT BookID FROM books WHERE Title = @BookTitle)";
+            using (MySqlConnection connection = new MySqlConnection(publix.Connect))
+            {
+               connection.Open();
+               
+            }
+            
             string query = "DELETE FROM loans WHERE BookID = (SELECT BookID FROM books WHERE Title = @BookTitle) AND MemberID = @MemberID";
-
+            string report = "INSERT INTO reports (ReportType, GeneratedDate, Details, Sender) VALUES (@Type, @Date, @Details, @Sender)";
             using (MySqlConnection connection = new MySqlConnection(publix.Connect))
             {
                 MySqlCommand command = new MySqlCommand(query, connection);
                 command.Parameters.AddWithValue("@BookTitle", bookTitle);
                 command.Parameters.AddWithValue("@MemberID", memberId);
-
+                var updateCommand = new MySqlCommand(query2, connection);
+                updateCommand.Parameters.AddWithValue("@BookTitle", bookTitle);
+                MySqlCommand repo = new MySqlCommand(report, connection);
+                repo.Parameters.AddWithValue("@Type","Return");
+                repo.Parameters.AddWithValue("@Date", DateTime.Now);
+                repo.Parameters.AddWithValue("@Details",publix.Name+" Returned book: "+bookTitle);
+                repo.Parameters.AddWithValue("@Sender",publix.ID);
                 connection.Open();
                 int rowsAffected = command.ExecuteNonQuery();
-
+                repo.ExecuteNonQuery();
                 if (rowsAffected > 0)
                 {
                     MessageBox.Show("Book returned successfully.");
@@ -345,6 +360,7 @@ namespace LibraryManagementSystem
                 {
                     MessageBox.Show("No loan record found for the selected book.");
                 }
+                updateCommand.ExecuteNonQuery();
 
             }
         }

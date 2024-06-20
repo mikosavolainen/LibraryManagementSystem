@@ -99,10 +99,23 @@ namespace LibraryManagementSystem
                         return;
                     }
 
+                    // Check available copies of the book
+                    string availabilityQuery = "SELECT AvailableCopies FROM books WHERE BookID = @BookID";
+                    var availabilityCommand = new MySqlCommand(availabilityQuery, connection);
+                    availabilityCommand.Parameters.AddWithValue("@BookID", bookID);
+
+                    int availableCopies = Convert.ToInt32(availabilityCommand.ExecuteScalar());
+
+                    if (availableCopies <= 0)
+                    {
+                        MessageBox.Show("There are no available copies of this book.", "No Available Copies", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
                     // Proceed with loaning the book
                     DateTime loanDate = DateTime.Now;
                     DateTime returnDate = loanDate.AddMonths(1);
-                    string query = "INSERT INTO loans (BookID, MemberID, LoanDate, ReturnDate) VALUES (@BookID, @MemberID, @LoanDate, @ReturnDate)";
+                    string query = "INSERT INTO loans (BookID, MemberID, LoanDate, ReturnDate, Status) VALUES (@BookID, @MemberID, @LoanDate, @ReturnDate, 'Lainassa')";
                     var command = new MySqlCommand(query, connection);
                     command.Parameters.AddWithValue("@BookID", bookID);
                     command.Parameters.AddWithValue("@MemberID", publix.ID);
@@ -110,6 +123,20 @@ namespace LibraryManagementSystem
                     command.Parameters.AddWithValue("@ReturnDate", returnDate);
 
                     command.ExecuteNonQuery();
+
+                    string report = "INSERT INTO reports (ReportType, GeneratedDate, Details, Sender) VALUES (@Type, @Date, @Details, @Sender)";
+                    MySqlCommand repo = new MySqlCommand(report, connection);
+                    repo.Parameters.AddWithValue("@Type", "Loan");
+                    repo.Parameters.AddWithValue("@Date", DateTime.Now);
+                    repo.Parameters.AddWithValue("@Details", publix.Name + " Loaned Book: " + bookID);
+                    repo.Parameters.AddWithValue("@Sender", publix.ID);
+                    repo.ExecuteNonQuery();
+                    // Update available copies of the book
+                    string updateQuery = "UPDATE books SET AvailableCopies = AvailableCopies - 1 WHERE BookID = @BookID";
+                    var updateCommand = new MySqlCommand(updateQuery, connection);
+                    updateCommand.Parameters.AddWithValue("@BookID", bookID);
+                    updateCommand.ExecuteNonQuery();
+
                     MessageBox.Show("Book loaned successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
@@ -119,6 +146,7 @@ namespace LibraryManagementSystem
                 MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
 
         private void buttonLoan_Click(object sender, EventArgs e)
@@ -147,6 +175,10 @@ namespace LibraryManagementSystem
             log.Show();
             this.Hide();
         }
-        
+
+        private void buttonLoan_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }

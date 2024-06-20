@@ -92,6 +92,7 @@
             buttonLoan.TabIndex = 11;
             buttonLoan.Text = "Loan";
             buttonLoan.UseVisualStyleBackColor = true;
+            buttonLoan.Click += buttonLoan_Click_1;
             // 
             // mainpage
             // 
