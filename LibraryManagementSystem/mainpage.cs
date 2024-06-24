@@ -99,7 +99,7 @@ namespace LibraryManagementSystem
                         return;
                     }
 
-                    // Check available copies of the book
+                    
                     string availabilityQuery = "SELECT AvailableCopies FROM books WHERE BookID = @BookID";
                     var availabilityCommand = new MySqlCommand(availabilityQuery, connection);
                     availabilityCommand.Parameters.AddWithValue("@BookID", bookID);
@@ -108,7 +108,7 @@ namespace LibraryManagementSystem
 
                     if (availableCopies <= 0)
                     {
-                        MessageBox.Show("There are no available copies of this book.", "No Available Copies", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("This book is not available.", "No Available Copies", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
@@ -156,6 +156,8 @@ namespace LibraryManagementSystem
                 MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+
 
 
 
