@@ -47,6 +47,7 @@
             button4 = new Button();
             label8 = new Label();
             comboBox1 = new ComboBox();
+            button6 = new Button();
             SuspendLayout();
             // 
             // label2
@@ -203,7 +204,6 @@
             label8.Size = new Size(33, 15);
             label8.TabIndex = 20;
             label8.Text = "Role:";
-            
             // 
             // comboBox1
             // 
@@ -214,11 +214,22 @@
             comboBox1.Size = new Size(142, 23);
             comboBox1.TabIndex = 22;
             // 
+            // button6
+            // 
+            button6.Location = new Point(119, 12);
+            button6.Name = "button6";
+            button6.Size = new Size(75, 23);
+            button6.TabIndex = 23;
+            button6.Text = "Statics";
+            button6.UseVisualStyleBackColor = true;
+            button6.Click += button6_Click;
+            // 
             // Admin
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1180, 464);
+            Controls.Add(button6);
             Controls.Add(comboBox1);
             Controls.Add(label8);
             Controls.Add(button4);
@@ -269,5 +280,6 @@
         private Button button5;
         private Label label8;
         private ComboBox comboBox1;
+        private Button button6;
     }
 }

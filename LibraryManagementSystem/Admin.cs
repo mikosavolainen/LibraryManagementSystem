@@ -79,7 +79,7 @@ namespace LibraryManagementSystem
                         textBox4.Text = reader["EmailAddress"].ToString();
                         textBox5.Text = reader["Address"].ToString();
                         maskedTextBox1.Text = reader["PhoneNumber"].ToString();
-                        comboBox1.SelectedItem = reader["Role"].ToString(); 
+                        comboBox1.SelectedItem = reader["Role"].ToString();
                     }
 
                     reader.Close();
@@ -194,6 +194,13 @@ namespace LibraryManagementSystem
         private void textBox6_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            var log = new Statics();
+            log.Show();
+            this.Hide();
         }
     }
 }
