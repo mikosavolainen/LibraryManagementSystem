@@ -13,6 +13,8 @@ using static Login.@public;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using System.Net;
+using static System.ComponentModel.Design.ObjectSelectorEditor;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace LibraryManagementSystem
 {
@@ -332,48 +334,68 @@ namespace LibraryManagementSystem
                 return;
             }
 
-
             string titlePart = itemParts[0].Trim();
             string bookTitle = titlePart.Replace("Book Name: ", "").Trim();
             string memberId = publix.ID;
+            int bookId = -1;
 
-            string query2 = "UPDATE books SET AvailableCopies = AvailableCopies + 1 WHERE BookID = (SELECT BookID FROM books WHERE Title = @BookTitle)";
+            string queryGetBookID = "SELECT BookID FROM books WHERE Title = @BookTitle";
             using (MySqlConnection connection = new MySqlConnection(publix.Connect))
             {
-               connection.Open();
-               
-            }
-            
-            string query = "DELETE FROM loans WHERE BookID = (SELECT BookID FROM books WHERE Title = @BookTitle) AND MemberID = @MemberID";
-            string report = "INSERT INTO reports (ReportType, GeneratedDate, Details, Sender) VALUES (@Type, @Date, @Details, @Sender)";
-            using (MySqlConnection connection = new MySqlConnection(publix.Connect))
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@BookTitle", bookTitle);
-                command.Parameters.AddWithValue("@MemberID", memberId);
-                var updateCommand = new MySqlCommand(query2, connection);
-                updateCommand.Parameters.AddWithValue("@BookTitle", bookTitle);
-                MySqlCommand repo = new MySqlCommand(report, connection);
-                repo.Parameters.AddWithValue("@Type","Return");
-                repo.Parameters.AddWithValue("@Date", DateTime.Now);
-                repo.Parameters.AddWithValue("@Details",publix.Name+" Returned book: "+bookTitle);
-                repo.Parameters.AddWithValue("@Sender",publix.ID);
+                MySqlCommand commandGetBookID = new MySqlCommand(queryGetBookID, connection);
+                commandGetBookID.Parameters.AddWithValue("@BookTitle", bookTitle);
                 connection.Open();
-                int rowsAffected = command.ExecuteNonQuery();
-                repo.ExecuteNonQuery();
+                using (MySqlDataReader reader = commandGetBookID.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        bookId = reader.GetInt32("BookID");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Book not found in the database.");
+                        return;
+                    }
+                }
+                connection.Close();
+            }
+
+            string queryUpdateCopies = "UPDATE books SET AvailableCopies = AvailableCopies + 1 WHERE BookID = @BookID";
+            string queryDeleteLoan = "DELETE FROM loans WHERE BookID = @BookID AND MemberID = @MemberID";
+            string queryInsertReport = "INSERT INTO reports (ReportType, GeneratedDate, Details, Sender, BookID) VALUES (@Type, @Date, @Details, @Sender, @BookID)";
+
+            using (MySqlConnection connection = new MySqlConnection(publix.Connect))
+            {
+                MySqlCommand commandDeleteLoan = new MySqlCommand(queryDeleteLoan, connection);
+                commandDeleteLoan.Parameters.AddWithValue("@BookID", bookId);
+                commandDeleteLoan.Parameters.AddWithValue("@MemberID", memberId);
+
+                MySqlCommand commandUpdateCopies = new MySqlCommand(queryUpdateCopies, connection);
+                commandUpdateCopies.Parameters.AddWithValue("@BookID", bookId);
+
+                MySqlCommand commandInsertReport = new MySqlCommand(queryInsertReport, connection);
+                commandInsertReport.Parameters.AddWithValue("@Type", "Return");
+                commandInsertReport.Parameters.AddWithValue("@Date", DateTime.Now);
+                commandInsertReport.Parameters.AddWithValue("@Details", publix.Name + " Returned book: " + bookTitle);
+                commandInsertReport.Parameters.AddWithValue("@Sender", memberId);
+                commandInsertReport.Parameters.AddWithValue("@BookID", bookId);
+
+                connection.Open();
+                int rowsAffected = commandDeleteLoan.ExecuteNonQuery();
+                commandInsertReport.ExecuteNonQuery();
                 if (rowsAffected > 0)
                 {
                     MessageBox.Show("Book returned successfully.");
+                    commandUpdateCopies.ExecuteNonQuery();
                     LoadLoans();
                 }
                 else
                 {
                     MessageBox.Show("No loan record found for the selected book.");
                 }
-                updateCommand.ExecuteNonQuery();
-
             }
         }
+
 
         private void button6_Click(object sender, EventArgs e)
         {

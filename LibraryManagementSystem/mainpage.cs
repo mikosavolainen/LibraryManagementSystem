@@ -112,6 +112,13 @@ namespace LibraryManagementSystem
                         return;
                     }
 
+                    // Fetch the book title
+                    string titleQuery = "SELECT Title FROM books WHERE BookID = @BookID";
+                    var titleCommand = new MySqlCommand(titleQuery, connection);
+                    titleCommand.Parameters.AddWithValue("@BookID", bookID);
+
+                    string bookTitle = titleCommand.ExecuteScalar()?.ToString();
+
                     // Proceed with loaning the book
                     DateTime loanDate = DateTime.Now;
                     DateTime returnDate = loanDate.AddMonths(1);
@@ -124,13 +131,16 @@ namespace LibraryManagementSystem
 
                     command.ExecuteNonQuery();
 
-                    string report = "INSERT INTO reports (ReportType, GeneratedDate, Details, Sender) VALUES (@Type, @Date, @Details, @Sender)";
+                    // Insert report
+                    string report = "INSERT INTO reports (ReportType, GeneratedDate, Details, Sender, BookID) VALUES (@Type, @Date, @Details, @Sender, @BookID)";
                     MySqlCommand repo = new MySqlCommand(report, connection);
                     repo.Parameters.AddWithValue("@Type", "Loan");
                     repo.Parameters.AddWithValue("@Date", DateTime.Now);
-                    repo.Parameters.AddWithValue("@Details", publix.Name + " Loaned Book: " + bookID);
+                    repo.Parameters.AddWithValue("@Details", publix.Name + " Loaned Book: " + bookTitle);
                     repo.Parameters.AddWithValue("@Sender", publix.ID);
+                    repo.Parameters.AddWithValue("@BookID", bookID);
                     repo.ExecuteNonQuery();
+
                     // Update available copies of the book
                     string updateQuery = "UPDATE books SET AvailableCopies = AvailableCopies - 1 WHERE BookID = @BookID";
                     var updateCommand = new MySqlCommand(updateQuery, connection);
@@ -146,6 +156,7 @@ namespace LibraryManagementSystem
                 MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
 
 
