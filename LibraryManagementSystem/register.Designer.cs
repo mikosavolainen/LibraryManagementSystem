@@ -99,9 +99,9 @@
             label9.AutoSize = true;
             label9.Location = new Point(73, 222);
             label9.Name = "label9";
-            label9.Size = new Size(42, 15);
+            label9.Size = new Size(49, 15);
             label9.TabIndex = 19;
-            label9.Text = "Adress";
+            label9.Text = "Address";
             // 
             // textBox5
             // 
