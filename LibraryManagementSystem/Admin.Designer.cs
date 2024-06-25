@@ -270,14 +270,10 @@
         private TextBox textBox4;
         private TextBox textBox5;
         private Button button1;
-        private Button button2;
         private MySql.Data.MySqlClient.MySqlCommand mySqlCommand1;
         private ListBox listBox1;
-        private MaskedTextBox maskedTextBox2;
-        private Label label7;
         private Button button3;
         private Button button4;
-        private Button button5;
         private Label label8;
         private ComboBox comboBox1;
         private Button button6;
