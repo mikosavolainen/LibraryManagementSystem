@@ -43,7 +43,7 @@ namespace LibraryManagementSystem
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(51, 68);
+            textBox1.Location = new Point(51, 78);
             textBox1.Margin = new Padding(3, 4, 3, 4);
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(114, 27);
@@ -78,10 +78,10 @@ namespace LibraryManagementSystem
             // button1
             // 
             button1.BackColor = Color.LightGreen;
-            button1.Location = new Point(54, 233);
+            button1.Location = new Point(51, 203);
             button1.Margin = new Padding(3, 4, 3, 4);
             button1.Name = "button1";
-            button1.Size = new Size(86, 31);
+            button1.Size = new Size(114, 31);
             button1.TabIndex = 4;
             button1.Text = "login";
             button1.UseVisualStyleBackColor = false;
@@ -90,7 +90,7 @@ namespace LibraryManagementSystem
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(72, 129);
+            label2.Location = new Point(72, 128);
             label2.Name = "label2";
             label2.Size = new Size(72, 20);
             label2.TabIndex = 3;
