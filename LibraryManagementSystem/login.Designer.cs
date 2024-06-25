@@ -114,7 +114,7 @@ namespace LibraryManagementSystem
             Controls.Add(groupBox1);
             Margin = new Padding(3, 4, 3, 4);
             Name = "login";
-            Text = "Form2";
+            Text = "login";
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ResumeLayout(false);

@@ -106,7 +106,7 @@
             Controls.Add(textBox1);
             Controls.Add(listBox1);
             Name = "mainpage";
-            Text = "Form1";
+            Text = "Mainpage";
             Load += mainpage_Load;
             ResumeLayout(false);
             PerformLayout();
